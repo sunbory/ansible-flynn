@@ -22,7 +22,7 @@
   environment: "{{ proxy_env }}"
 
 - name: Create flynn cluster with discovery peer-ips
-  shell: flynn-host init --peer-ips {{ flynn_nodes | join('\n') }}
+  shell: flynn-host init --peer-ips {{ groups['flynn_nodes'] | join('\n') }}
   notify: Restart flynn
 
 - name: Make sure a service is running
@@ -35,6 +35,6 @@
   shell: CLUSTER_DOMAIN="{{ flynn_cluster_name }}" \
          flynn-host bootstrap \
          --min-hosts 3 \
-         --peer-ips {{ flynn_nodes | join('\n') }}
+         --peer-ips {{ groups['flynn_nodes'] | join('\n') }}
   delegate_to: "{{ flynn_master }}"
   run_once: True
