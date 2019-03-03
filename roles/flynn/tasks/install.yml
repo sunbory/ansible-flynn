@@ -22,15 +22,8 @@
   environment: "{{ proxy_env }}"
 
 - name: Generate discovery hash
-  shell: flynn-host init --init-discovery
-  register: flynn_hash
-  delegate_to: "{{ flynn_master }}"
-  run_once: True
+  shell: flynn-host init --peer-ips {{ my_list | join('\n') }}
   when: is_flynn_deployed|failed
-
-- name: Create flynn cluster with discovery hash
-  shell: flynn-host init --discovery "{{ flynn_hash.stdout}}"
-  when: inventory_hostname in groups['flynn_nodes'] and is_flynn_deployed|failed
   notify: Restart flynn
 
 - name: Make sure a service is running
@@ -43,7 +36,7 @@
   shell: CLUSTER_DOMAIN="{{ flynn_cluster_name }}" \
          flynn-host bootstrap \
          --min-hosts 3 \
-         --discovery "{{ flynn_hash.stdout}}"
+         --peer-ips {{ my_list | join('\n') }}
   delegate_to: "{{ flynn_master }}"
   run_once: True
   when: is_flynn_deployed|failed
