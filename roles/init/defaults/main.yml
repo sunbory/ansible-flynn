@@ -1,0 +1,3 @@
+---
+# defaults file for init
+proxy: 10.140.132.158:3128
