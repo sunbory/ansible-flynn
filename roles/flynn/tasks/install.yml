@@ -3,10 +3,12 @@
     url: https://dl.flynn.io/install-flynn
     dest: /opt/install-flynn
     mode: 0755
+  environment: "{{ proxy_env }}"
 
 - name: Check flynn
   shell: flynn-host --version
   ignore_errors: true
+  when: {{ force }}
   register: is_flynn_installed
 
 - name: Check if cluster was deployed
@@ -17,6 +19,7 @@
 - name: Install flynn
   shell: bash /opt/install-flynn
   when: is_flynn_installed|failed
+  environment: "{{ proxy_env }}"
 
 - name: Generate discovery hash
   shell: flynn-host init --init-discovery
