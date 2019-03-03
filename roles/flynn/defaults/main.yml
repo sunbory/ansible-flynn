@@ -4,5 +4,5 @@ flynn_master:
 flynn_cluster_name:
 
 proxy_env:
-  http_proxy: 10.140.123.158:3128
-  https_proxy: 10.140.123.158:3128
+  http_proxy:
+  https_proxy:
