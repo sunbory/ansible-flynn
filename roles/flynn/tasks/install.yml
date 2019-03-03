@@ -21,9 +21,8 @@
   when: is_flynn_installed|failed
   environment: "{{ proxy_env }}"
 
-- name: Generate discovery hash
+- name: Create flynn cluster with discovery peer-ips
   shell: flynn-host init --peer-ips {{ flynn_nodes | join('\n') }}
-  when: is_flynn_deployed|failed
   notify: Restart flynn
 
 - name: Make sure a service is running
@@ -39,4 +38,3 @@
          --peer-ips {{ flynn_nodes | join('\n') }}
   delegate_to: "{{ flynn_master }}"
   run_once: True
-  when: is_flynn_deployed|failed
