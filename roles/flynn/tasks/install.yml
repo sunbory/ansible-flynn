@@ -17,7 +17,7 @@
   register: is_flynn_deployed
 
 - name: Install flynn
-  shell: bash /opt/install-flynn
+  shell: bash /opt/install-flynn --clean 
   when: is_flynn_installed|failed
   environment: "{{ proxy_env }}"
 
