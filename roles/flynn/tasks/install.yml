@@ -8,33 +8,33 @@
 - name: Check flynn
   shell: flynn-host --version
   ignore_errors: true
-  when: {{ force }}
+  when: not force 
   register: is_flynn_installed
 
-- name: Check if cluster was deployed
-  shell: curl -I http://dashboard."{{ flynn_cluster_name }}"/
-  ignore_errors: true
-  register: is_flynn_deployed
+# - name: Check if cluster was deployed
+#   shell: curl -I http://dashboard."{{ flynn_cluster_name }}"/
+#   ignore_errors: true
+#   register: is_flynn_deployed
 
 - name: Install flynn
-  shell: bash /opt/install-flynn --clean 
-  when: is_flynn_installed|failed
+  shell: echo yes | bash /opt/install-flynn --clean 
+  when: is_flynn_installed is failed or force
   environment: "{{ proxy_env }}"
 
 - name: Create flynn cluster with discovery peer-ips
-  shell: flynn-host init --peer-ips {{ groups['flynn_nodes'] | join('\n') }}
+  shell: flynn-host init --peer-ips {{ groups['flynn'] | join(',') }}
   notify: Restart flynn
 
 - name: Make sure a service is running
-  systemd:
-    state: started
+  service:
     name: flynn-host
-    enabled: True
+    state: started
+    enabled: yes
 
 - name: Bootstrap cluster
   shell: CLUSTER_DOMAIN="{{ flynn_cluster_name }}" \
          flynn-host bootstrap \
          --min-hosts 3 \
-         --peer-ips {{ groups['flynn_nodes'] | join('\n') }}
+         --peer-ips {{ groups['flynn'] | join(',') }}
   delegate_to: "{{ flynn_master }}"
   run_once: True
