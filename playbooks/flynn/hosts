@@ -1,7 +1,12 @@
-[nodes]
+[flynn:children]
+flynn_master
+flynn_nodes
 
+[flynn_master]
 
-[nodes:vars]
-ansible_ssh_user = 
-ansible_ssh_pass = 
-ansibel_sudo_pass = 
+[flynn_nodes]
+
+# [nodes:vars]
+# ansible_ssh_user = 
+# ansible_ssh_pass = 
+# ansibel_sudo_pass = 
