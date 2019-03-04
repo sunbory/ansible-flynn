@@ -2,12 +2,14 @@
 - hosts: all
   become: true
   vars:
-    flynn_master: flynn01
+  
     flynn_cluster_name: flynn.cluster
     proxy_env:
-      http_proxy: 10.140.123.158:3128
-      https_proxy: 10.140.123.158:3128
+      http_proxy: http://10.140.123.158:3128
+      https_proxy: http://10.140.123.158:3128
+      
     force: false
+    
   roles:
     - init
     - flynn
