@@ -1,0 +1,7 @@
+[nodes]
+
+
+[nodes:vars]
+ansible_ssh_user = 
+ansible_ssh_pass = 
+ansibel_sudo_pass = 
