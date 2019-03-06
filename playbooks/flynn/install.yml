@@ -3,6 +3,7 @@
   become: true
   vars:
   
+    flynn_master: 10.140.123.158
     flynn_cluster_name: flynn.cluster
     proxy_env:
       http_proxy: http://10.140.123.158:3128
