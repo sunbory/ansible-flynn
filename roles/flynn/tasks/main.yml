@@ -1,5 +1,11 @@
 ---
 # tasks file for flynn
+- name: Stop service and backup state files
+  include: stop.yml
+  when: reboot
+  ignore_errors: true
+  become: true
+
 - name: Include install.yml
   include: install.yml
   become: true
