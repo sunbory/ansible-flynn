@@ -1,0 +1,11 @@
+- name: Make sure flynn-host service is stopped
+  service:
+    name: flynn-host
+    state: stopped
+    
+- name: Make sure .containerinit is stopped
+  shell: start-stop-daemon --stop --oknodo --retry 5 --name ".containerinit"
+    
+- name: Backup old bolt state data
+  shell: BackupDir=/var/lib/flynn/backup.$(date +%F_%R)/; mkdir ${BackupDir} && mv /var/lib/flynn/*.bolt ${BackupDir}
+
