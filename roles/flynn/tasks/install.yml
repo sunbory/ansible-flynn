@@ -8,7 +8,6 @@
 - name: Check flynn
   shell: flynn-host --version
   ignore_errors: true
-  when: not force 
   register: is_flynn_installed
 
 # - name: Check if cluster was deployed
@@ -18,26 +17,17 @@
 
 - name: Install flynn
   shell: bash /opt/install-flynn --clean --yes
-  when: is_flynn_installed is failed or force
+  when: is_flynn_installed is failed or reinstall
   environment: "{{ proxy_env }}"
 
 - name: Make sure default rules for iptables FORWARD Chain is ACCEPT
   iptables:
     chain: FORWARD
     policy: ACCEPT
-  
-- name: Make sure service is stopped
-  service:
-    name: flynn-host
-    state: stopped
     
-- name: Backup old bolt state data
-  shell: BackupDir=/var/lib/flynn/backup.$(date +%F_%R)/; mkdir ${BackupDir} && mv /var/lib/flynn/*.bolt ${BackupDir}
-  ignore_errors: true
-  
 - name: Create flynn cluster with discovery peer-ips
   shell: flynn-host init --peer-ips {{ groups['flynn'] | join(',') }}
-  notify: Restart flynn
+#  notify: Restart flynn
   
 - name: Make sure a service is running
   service:
