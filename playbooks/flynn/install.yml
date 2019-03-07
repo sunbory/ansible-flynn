@@ -1,6 +1,7 @@
 ---
 - hosts: all
   become: true
+  gather_facts: no
   vars:
   
     flynn_master: 10.140.123.158
@@ -9,7 +10,8 @@
       http_proxy: http://10.140.123.158:3128
       https_proxy: http://10.140.123.158:3128
       
-    force: false
+    reboot: true
+    reinstall: false
     
   roles:
     - init
