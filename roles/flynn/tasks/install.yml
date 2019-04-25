@@ -40,5 +40,12 @@
          flynn-host bootstrap \
          --min-hosts 3 \
          --peer-ips {{ groups['peers'] | join(',') }}
+  register: result
+  delegate_to: "{{ flynn_master }}"
+  run_once: True
+
+- name: Print bootstrap result
+  debug: 
+    var: result.stderr_lines
   delegate_to: "{{ flynn_master }}"
   run_once: True
