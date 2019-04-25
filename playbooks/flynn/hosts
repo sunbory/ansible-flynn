@@ -1,4 +1,13 @@
-[flynn]
+[flynn:children]
+peers
+nodes
+
+
+[peers]
+
+
+[nodes]
+
 
 
 # [nodes:vars]
