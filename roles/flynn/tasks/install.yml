@@ -26,7 +26,7 @@
     policy: ACCEPT
     
 - name: Create flynn cluster with discovery peer-ips
-  shell: flynn-host init --peer-ips {{ groups['flynn'] | join(',') }}
+  shell: flynn-host init --peer-ips {{ groups['peers'] | join(',') }}
 #  notify: Restart flynn
   
 - name: Make sure a service is running
@@ -39,6 +39,6 @@
   shell: CLUSTER_DOMAIN="{{ flynn_cluster_name }}" \
          flynn-host bootstrap \
          --min-hosts 3 \
-         --peer-ips {{ groups['flynn'] | join(',') }}
+         --peer-ips {{ groups['peers'] | join(',') }}
   delegate_to: "{{ flynn_master }}"
   run_once: True
