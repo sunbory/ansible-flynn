@@ -1,9 +1,9 @@
 [flynn:children]
-peer
+peers
 proxy
 
 
-[peer]
+[peers]
 
 
 [proxy]
