@@ -1,12 +1,12 @@
 [flynn:children]
-peers
-nodes
+peer
+proxy
 
 
-[peers]
+[peer]
 
 
-[nodes]
+[proxy]
 
 
 
