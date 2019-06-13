@@ -1,0 +1,14 @@
+---
+# tasks file
+- name: upload crts files to remote host
+  copy:
+    src: crts/
+    dest: /root/crts/
+    
+- name: find files of remote host
+  copy:
+    src: convert.sh
+    dest: /root/convert.sh
+  
+- name: update ca certificates
+  shell: bash convert.sh
