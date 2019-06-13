@@ -5,7 +5,7 @@
     src: crts/
     dest: /root/crts/
     
-- name: find files of remote host
+- name: upload scripts to remote host
   copy:
     src: convert.sh
     dest: /root/convert.sh
